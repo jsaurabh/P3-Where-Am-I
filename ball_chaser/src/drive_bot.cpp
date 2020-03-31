@@ -7,14 +7,14 @@ ros::Publisher motor_command_publisher;
 bool handle_drive_request_callback(ball_chaser::DriveToTarget::Request& req,
      ball_chaser::DriveToTarget::Response& res){
 	
-//	ROS_INFO("DriveToTarget request received: -linear: %1.2f, -angular: %1.2f", (float)req.linear, (float)req.angular);
+	ROS_INFO("DriveToTarget request received: -linear: %1.2f, -angular: %1.2f", (float)req.linear_x, (float)req.angular_z);
 //
 	geometry_msgs::Twist motor_commands;
-	motor_commands.linear.x = 0.5;
-	motor_commands.angular.z = 0.0;
+	motor_commands.linear.x = req.linear_x;
+	motor_commands.angular.z = req.angular_z;
 
 	motor_command_publisher.publish(motor_commands);
-	ros::Duration(5).sleep();
+	ros::Duration(.1).sleep();
 	res.msg_feedback = "DriveToTarget request submitted: -linear: " + std::to_string(motor_commands.linear.x) + ", -angular: " + std::to_string(motor_commands.angular.z);
 	ROS_INFO_STREAM(res.msg_feedback);
 	return true;
