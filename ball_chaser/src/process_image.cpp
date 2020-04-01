@@ -2,6 +2,7 @@
 #include "ball_chaser/DriveToTarget.h"
 #include <sensor_msgs/Image.h>
 #include <math.h>
+using namespace std;
 
 ros::ServiceClient client;
 
@@ -21,57 +22,50 @@ void drive_robot(float lin_x, float ang_z){
     }
 }
 
-bool ball_check(int idx, sensor_msgs::Image img){
-  //process data for all 3 channels(serialized)
-  std::vector<int> rgb_values = {img.data[idx], img.data[idx+1], img.data[idx+2]};
-  int white_pixel = 255;
-  int white_pixel_count = std::count(rgb_values.begin(), rgb_values.end(), white_pixel);
-  if (white_pixel_count == 3)
-    return true;
-  return false;
-}
-
-int find_max(int l, int m, int r){
-  int max_el = std::max(std::max(l, m), r);
-  return max_el;
-}
-
 void process_image_callback(const sensor_msgs::Image img){
-    float left_idx = 0;
-    float middle_idx = 0.33;
-    float right_idx = 0.67;
-  
+    
+    int white_pixel = 255;
+    float left_limit = img.width/3;
+    float middle_limit = 2 * img.width/3;
+
     int l = 0;
     int r = 0;
     int m = 0;
-  
-    for (int i=0; i < img.height * img.step; i++){
-      if(ball_check(i, img)){
+
+    for (int i=0; i < img.height * img.step; i+= 3){
+      if(img.data[i] == white_pixel && img.data[i+1] == white_pixel && img.data[i+2] == white_pixel){
         ROS_INFO("Ball found in image stream. Proceeding to send velocity");
-        float row_position_idx = fmod((float(i)/float(img.step)), 1); 
+        float row_position_idx = (i % (img.step * 3))/3; 
+        ROS_INFO("position_idx is: %1.2f", row_position_idx);
         
-        if (left_idx <= row_position_idx < middle_idx)
-          	l++;
-        else if (middle_idx<= row_position_idx < right_idx)
-          	m++;
-        else
-          	r++;
-      }else{
-        drive_robot(0.0, 0.0);
-      }
+        if (row_position_idx <= left_limit)
+          	l+=1;
+        else if (left_limit < row_position_idx <= middle_limit)
+          	m+=1;
+        else if (row_position_idx > middle_limit)
+          	r+=1;
+      }//else{
+      //   ROS_INFO("NOTHING!");
+      // }
     }
   	
-    if (find_max(l, r, m) == l){
-      ROS_INFO("Moving along left direction");
-      drive_robot(0.0, 0.1);
-    }else if (find_max(l, r, m) == m){
-      ROS_INFO("Moving forward");
-      drive_robot(0.1, 0.0);
-    }else{
-      ROS_INFO("Moving along the right direction");
-      drive_robot(0.0, -0.1);
-    }
+    std::vector<int> pos = {l, r, m};
+    int max_pos = *std::max_element(pos.begin(), pos.end());
 
+    // int max_pos_idx = std::max(std::max(l, m), r);
+    if (max_pos == 0){
+      ROS_INFO("Staying Put");
+      drive_robot(0.0, 0.0);
+    }else if (max_pos == l){
+      ROS_INFO("Moving left");
+      drive_robot(0.0, 0.2);
+    }else if (max_pos == m){
+      ROS_INFO("Moving foward");
+      drive_robot(0.2, 0.0);
+    }else{
+      ROS_INFO("Moving right");
+      drive_robot(0.0, -0.2);
+    }
 }
 
 int main(int argc, char** argv){

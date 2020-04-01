@@ -2,8 +2,8 @@
 
 <launch>
 
-  <arg name="x" default="0"/>
-  <arg name="y" default="0"/>
+  <arg name="x" default="-9.750404"/>
+  <arg name="y" default="-3.593583"/>
   <arg name="z" default="0"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
