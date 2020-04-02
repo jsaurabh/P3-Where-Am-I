@@ -22,7 +22,6 @@
       <geometry>
         <cylinder radius="0.2" length="0.6"/>
       </geometry>
-      <material name="blue"/>
     </visual>
     <collision>
       <geometry>
@@ -46,7 +45,6 @@
         <geometry>
           <cylinder radius="${wheeldiam/2}" length="0.1"/>
         </geometry>
-        <material name="black"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
@@ -72,7 +70,6 @@
           <box size="${leglen} 0.1 0.2"/>
         </geometry>
         <origin xyz="0 0 -${leglen/2}" rpy="0 ${pi/2} 0"/>
-        <material name="white"/>
       </visual>
       <collision>
         <geometry>
@@ -94,7 +91,6 @@
         <geometry>
           <box size="${baselen} 0.1 0.1"/>
         </geometry>
-        <material name="white"/>
       </visual>
       <collision>
         <geometry>
@@ -121,7 +117,6 @@
       <geometry>
         <sphere radius="0.2"/>
       </geometry>
-      <material name="white"/>
     </visual>
     <collision>
       <geometry>
