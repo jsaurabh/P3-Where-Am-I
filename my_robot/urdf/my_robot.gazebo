@@ -6,8 +6,8 @@
       <legacyMode>false</legacyMode>
       <alwaysOn>true</alwaysOn>
       <updateRate>10</updateRate>
-      <leftJoint>left_front_wheel_joint</leftJoint>
-      <rightJoint>right_front_wheel_joint</rightJoint>
+      <leftJoint>left_front_wheel_joint,left_back_wheel_joint</leftJoint>
+      <rightJoint>right_front_wheel_joint,right_back_wheel_joint</rightJoint>
       <wheelSeparation>0.4</wheelSeparation>
       <wheelDiameter>0.07</wheelDiameter>
       <torque>10</torque>
