@@ -23,7 +23,7 @@
     <arg name="world_name" value="$(arg world_file)"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find my_robot)/urdf/r2-d2.xacro'"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find my_robot)/urdf/my_robot.xacro'"/>
 
   <!-- Spawn My Robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" 
