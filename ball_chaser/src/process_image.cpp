@@ -49,22 +49,21 @@ void process_image_callback(const sensor_msgs::Image img){
       // }
     }
   	
-    std::vector<int> pos = {l, r, m};
-    int max_pos = *std::max_element(pos.begin(), pos.end());
+    int max_pos = std::max(std::max(l, m), r);
+    // int max_pos = *std::max_element(pos.begin(), pos.end());
 
-    // int max_pos_idx = std::max(std::max(l, m), r);
     if (max_pos == 0){
       ROS_INFO("Staying Put");
       drive_robot(0.0, 0.0);
     }else if (max_pos == l){
       ROS_INFO("Moving left");
-      drive_robot(0.0, 0.2);
+      drive_robot(0.0, 0.5);
     }else if (max_pos == m){
       ROS_INFO("Moving foward");
       drive_robot(0.2, 0.0);
     }else{
       ROS_INFO("Moving right");
-      drive_robot(0.0, -0.2);
+      drive_robot(0.0, -0.5);
     }
 }
 
