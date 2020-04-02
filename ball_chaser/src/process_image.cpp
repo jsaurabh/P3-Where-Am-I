@@ -46,11 +46,11 @@ void process_image_callback(const sensor_msgs::Image img){
     if (max_pos == 0)
         drive_robot(0.0, 0.0); 
     else if (max_pos == l)
-	      drive_robot(0.0, 0.15);  
+	      drive_robot(0.0, 0.4);  
     else if (max_pos == m)
-        drive_robot(0.15, 0.0);
+        drive_robot(0.4, 0.0);
     else
-        drive_robot(0.0, -0.15); 
+        drive_robot(0.0, -0.4); 
     }
 
 int main(int argc, char** argv){
