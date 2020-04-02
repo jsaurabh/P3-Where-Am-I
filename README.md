@@ -14,5 +14,14 @@ Design a differential drive robot with two sensors: a lidar and a camera. Place 
 
 Write a `drive_bot` node that will provide a service to drive the above mentioned robot by controlling its linear and angular velocities. Write a `process_image` that analyzes the robot's camera view and makes decisions to follow the ball.
 
+## Gazebo World
 
+This is what the Gazebo worls looks like, using only a bare minimum of add-on models
 
+![](assets/world-top.jpg)
+
+## Go Chase It
+
+![](assets/go-chase-it.gif)
+
+The full video can be found [here](assets/go-chase-it.mp4)
